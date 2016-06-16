@@ -1,0 +1,9 @@
+@import _root_.fr.watchnext.utils.views.FormDisplay
+@import _root_.fr.watchnext.utils.controllers.ReverseCrudHelperAdapter
+@(formDisplay: FormDisplay, isItNew: Boolean)
+
+@actionlink() = @{
+	ReverseCrudHelperAdapter.manage(formDisplay.getControllerName)
+}
+
+@fr.watchnext.utils.templates.form(formDisplay, isItNew, actionlink)

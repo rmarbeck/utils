@@ -1,0 +1,54 @@
+@import _root_.fr.watchnext.utils.views.FormDisplay;
+@(formDisplay: FormDisplay, isItNew: Boolean, actionlink: play.api.mvc.Call)
+
+@import fr.watchnext.utils.tags._
+
+@actions = {
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-9 text-center">
+      	<a class="btn btn-default" href="#" onclick="history.back();return false;"><span class="glyphicon glyphicon-chevron-left">@html_enhanced_messages(formDisplay.getActionKey+".cancel", "Cancel")</a>
+      @if(isItNew) {
+      	<button type="submit" class="btn btn-success" name="action" value="save"><span class="glyphicon glyphicon-save">@html_enhanced_messages(formDisplay.getActionKey+".save", "Save")</button>
+      	<button type="submit" class="btn btn-primary" name="action" value="show" formtarget="_blank"><span class="glyphicon glyphicon-save">@html_enhanced_messages(formDisplay.getActionKey+".show", "Show")</button>
+      } else {
+      	@inputHidden(formDisplay.getForm().field("id"))
+        <button type="submit" class="btn btn-primary" name="action" value="edit"><span class="glyphicon glyphicon-save"></span>@html_enhanced_messages(formDisplay.getActionKey+".edit", "Edit")</button>
+        <button type="submit" class="btn btn-primary" name="action" value="show" formtarget="_blank"><span class="glyphicon glyphicon-save"></span>@html_enhanced_messages(formDisplay.getActionKey+".show", "Show")</button>
+        <button type="submit" class="btn btn-danger" name="action" value="delete"><span class="glyphicon glyphicon-trash"></span>@html_enhanced_messages(formDisplay.getActionKey+".delete", "Delete")</button>
+      }
+      </div>
+    </div>
+}
+
+  <div class="container form">
+  
+  	<div class="row">
+    	<div class="col-xs-12">
+    		<h1>@html_enhanced_messages(formDisplay.getLabelKey+".title", "Managing Form")</h1>
+    	</div>
+    </div>
+  
+  	@helper.form(action = actionlink, 'class -> "form-horizontal", 'role -> "form") {
+      @actions
+      @for(currentField <- formDisplay.getFormFields) {
+        <div @if(currentField.hideSmall) {class="hidden-xs"}>
+        	@currentField.getType() match {
+              case "input" => {
+                @simple_admin_input(currentField.getField, currentField.getKey, currentField.options.toSeq:_*)
+              }
+              case "textarea" => {
+                @simple_admin_textarea(currentField.getField, currentField.getKey, currentField.options.toSeq:_*)
+              }
+              case "checkbox" => {
+                @simple_admin_checkbox(currentField.getField, currentField.getKey, currentField.options.toSeq:_*)
+              }
+              case "select" => {
+                @simple_admin_select_enhanced(currentField.getField, currentField.getPossibleKeys.zip(currentField.getPossibleValues), currentField.getKey, currentField.options.toSeq:_*)
+              }
+            }
+      	</div>
+      }
+      @actions
+    }
+    
+  </div>

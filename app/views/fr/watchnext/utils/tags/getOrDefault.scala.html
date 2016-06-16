@@ -1,0 +1,3 @@
+@(symbol: Symbol, defaultValue: String, args: (Symbol,Any)*)
+@{ args.toMap.get('class).map(_.toString)
+					.getOrElse(defaultValue) }

@@ -1,0 +1,23 @@
+@import _root_.fr.watchnext.utils.views.PageDisplay
+@import _root_.fr.watchnext.utils.controllers.ReverseCrudHelperAdapter
+@(pageDisplay: PageDisplay[_], controllerName: String, optionallink: (Long) => Html, currentSortBy: String, currentOrder: String, currentFilter: String, currentSize: Integer, displayNewLink: Boolean = true, actionlink: () => Html)
+
+@link(newPage:Int, sortBy: String, order: String, currentFilter: String, currentSize: Int) = {
+    @ReverseCrudHelperAdapter.page(controllerName, newPage, sortBy, order, currentFilter, currentSize)
+}
+
+@newlink() = {
+	@ReverseCrudHelperAdapter.create(controllerName)
+}
+
+@editlink(id:Long) = {
+    @ReverseCrudHelperAdapter.edit(controllerName, id)
+}
+@displaylink(id:Long) = {
+   	@ReverseCrudHelperAdapter.display(controllerName, id)
+}
+@if(displayNewLink) {
+	@fr.watchnext.utils.templates.page(pageDisplay, link, displaylink, editlink, optionallink, newlink, currentSortBy, currentOrder, currentFilter, currentSize, actionlink)
+} else {
+	@fr.watchnext.utils.templates.page(pageDisplay, link, displaylink, editlink, optionallink, null, currentSortBy, currentOrder, currentFilter, currentSize, actionlink)
+} 

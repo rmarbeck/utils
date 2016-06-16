@@ -1,0 +1,2 @@
+@(date: Date, display_format: String = "dd/MM/yyyy", message_key_if_null: String = "tags.date.unknown", locale1: String="fr", locale2: String="FR")
+@if(date == null) {@Messages(message_key_if_null)} else {@(new java.text.SimpleDateFormat(display_format, new java.util.Locale(locale1, locale2)).format(date))}

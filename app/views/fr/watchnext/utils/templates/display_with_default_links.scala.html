@@ -1,0 +1,13 @@
+@import _root_.fr.watchnext.utils.views.ModelDisplay
+@import _root_.fr.watchnext.utils.controllers.ReverseCrudHelperAdapter
+@(modelDisplay: ModelDisplay, controllerName: String, body: Html = Html(""))
+
+@newlink() = {
+	@ReverseCrudHelperAdapter.create(controllerName)
+}
+
+@editlink(id:Long) = {
+    @ReverseCrudHelperAdapter.edit(controllerName, id)
+}
+
+@fr.watchnext.utils.templates.display(modelDisplay, newlink, editlink, body)

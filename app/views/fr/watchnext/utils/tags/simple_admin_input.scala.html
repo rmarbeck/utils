@@ -1,0 +1,31 @@
+@(field: play.api.data.Field, key: String, args: (Symbol,Any)*)
+@import helper._
+@implicitField = @{ FieldConstructor(myBootstrapFieldConstructor.f) }
+
+@showConstraints = @{ args.toMap.get('_showConstraints).map(_.toString)
+					.getOrElse(false) }
+					
+@placeholder = @{ replaceVariablePart('placeholder, key, "placeholder", args:_*) }
+
+@label = @{ replaceVariablePart('label, key, "label", args:_*) }
+
+@_class = @{ getOrDefault('class, "form-control", args:_*) }
+
+@__class = @{ getOrDefault('_class, "form-group", args:_*) }
+
+@label_class = @{ getOrDefault('label_class, "col-sm-3 control-label", args:_*) }
+
+@body_class = @{ getOrDefault('body_class, "col-sm-9", args:_*) }
+
+@htmlArgs = @{ args.filter(arg => !arg._1.name.startsWith("_")
+				&& arg._1 != 'placeholder
+				&& arg._1 != '_label
+				&& arg._1 != 'class
+				&& arg._1 != '_class
+				&& arg._1 != '_label_class
+				&& arg._1 != '_body_class
+				&& arg._1 != '_showConstraints).toSeq }
+
+@helper.inputText(field,
+		(Seq('placeholder -> placeholder, '_label -> label,
+      	'class -> _class, '_class -> __class, '_label_class -> label_class, '_body_class -> body_class, '_showConstraints -> showConstraints) ++ htmlArgs):_*)

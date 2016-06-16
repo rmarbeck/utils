@@ -1,0 +1,6 @@
+@(price: Float, label: String = "€")
+@if(price != null) {
+	@java.text.NumberFormat.getInstance(java.util.Locale.FRENCH).format(price.toInt) @label
+} else {
+	-
+}

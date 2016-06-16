@@ -1,0 +1,22 @@
+@(action: String, filterName: String, currentFilter: String, addNewURL: String="", addNewLabelKey: String="admin.action.label.add.new.default")
+@import fr.watchnext.utils.tags._
+
+    @display_flash()
+    
+    <div class="row row-filter">
+        <div class="col-md-6">  
+            <form action="@action" method="GET" class="form-inline" role="form">
+              <div class="form-group">
+                <input class="form-control" type="search" id="searchbox" name="f" value="@currentFilter" placeholder="@enhanced_messages("admin.action.filter.by", "Filter by", false) @filterName...">
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="submit" id="searchsubmit" value="@enhanced_messages("admin.action.filter.by", "Filter by", false) @filterName..." class="btn primary">
+              </div>
+            </form>
+        </div>
+        @if(!"".equals(addNewURL)) {
+        <div class="col-md-6 text-right">
+        	<a type="button" class="btn btn-success" href="@addNewURL"><span class="glyphicon glyphicon-plus"></span>@html_enhanced_messages(addNewLabelKey, "Create")</a>
+        </div>
+        }
+    </div>

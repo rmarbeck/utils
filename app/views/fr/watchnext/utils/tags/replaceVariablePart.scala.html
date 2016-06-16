@@ -1,0 +1,2 @@
+@(symbol: Symbol, key: String, replacer: String, args: (Symbol,Any)*)@{ args.toMap.get(symbol).map(_.toString)
+					.getOrElse(Messages(key.replaceAll("VARIABLE", replacer).replaceAll("\\[|\\]", ""))) }
