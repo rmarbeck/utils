@@ -102,6 +102,17 @@ public class ReflectionHelper {
 		return Optional.empty();
 	}
 	
+	public static Optional<Object> createInstanceWithDefaultConstructor(Class<?> clazz) {
+		try {
+			return Optional.of(clazz.getConstructor().newInstance());
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return Optional.empty();
+	}
+	
 	public static Optional<Field> getField(Class<?> clazz, String fieldName) {
 		try {
 			return Optional.of(clazz.getField(fieldName));
@@ -129,14 +140,18 @@ public class ReflectionHelper {
 		return Optional.empty();
 	}
 	
+	public static Optional<Method> getMethod(Object instance, String methodName, Class<?>...argsClass) {
+		try {
+			return Optional.of(instance.getClass().getMethod(methodName, argsClass));
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return Optional.empty();
+	}
+	
 	public static Optional<Object> invoke(Optional<Method> method, Object o, Object...args) {
 		if (method.isPresent())
-			try {
-				return Optional.of(method.get().invoke(o, args));
-			} catch (IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				e.printStackTrace();
-			}
+			return Optional.of(invoke(method.get(), o, args));
 		return Optional.empty();
 	}
 	
@@ -147,5 +162,26 @@ public class ReflectionHelper {
 			e.printStackTrace();
 		}
 		return Optional.empty();
+	}
+	
+	
+	public static Object invoke(Method method, Object o, Object...args) {
+		try {
+			return method.invoke(o, args);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Object invoke(Method method, Class<?> clazz, Object...args) {
+		try {
+			return invoke(method, clazz.newInstance(), args);
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

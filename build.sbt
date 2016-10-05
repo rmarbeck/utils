@@ -1,6 +1,6 @@
 name := """utils"""
 
-version := "1.02"
+version := "1.03-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 

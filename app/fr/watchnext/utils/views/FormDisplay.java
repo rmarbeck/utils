@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import fr.watchnext.utils.controllers.CrudHelper;
+import fr.watchnext.utils.usual.ControllerHelper;
 import play.data.Form;
 import play.data.Form.Field;
 import scala.Symbol;
@@ -175,7 +175,7 @@ public class FormDisplay {
 	}
 	
 	public String getControllerName() {
-		return CrudHelper.guessControllerNameByModelName(underneathModel.orElse(guessModelName())).get();
+		return ControllerHelper.guessControllerNameByModelName(underneathModel.orElse(guessModelName())).get();
 	}
 	
 	private String guessModelName() {

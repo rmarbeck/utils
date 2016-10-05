@@ -15,6 +15,8 @@ import play.twirl.api.Template5;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.PagedList;
 
+import fr.watchnext.utils.usual.ControllerHelper;
+
 public class Crud<T extends Model & CrudReady<T, F>, F> {
 	private Template1<T,Html> showTemplate;
 	private Template2<Form<F>, Boolean, Html> editTemplate;
@@ -102,7 +104,7 @@ public class Crud<T extends Model & CrudReady<T, F>, F> {
 			}
 		}
 		return redirect(
-				ReverseCrudHelperAdapter.displayAll(CrudHelper.guessControllerNameByModelInstance(tInstance).get(), 20)
+				ReverseCrudHelperAdapter.displayAll(ControllerHelper.guessControllerNameByModelInstance(tInstance).get(), 20)
 				);
     }
 }
